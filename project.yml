@@ -61,6 +61,58 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         PRODUCT_BUNDLE_IDENTIFIER: local.minesweeper.tests
 
+  MinesweeperCoreTV:
+    type: framework
+    platform: tvOS
+    deploymentTarget: "17.0"
+    sources: [Sources/Core]
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_NAME: MinesweeperCore
+        PRODUCT_BUNDLE_IDENTIFIER: local.minesweeper.tv.core
+
+  MinesweeperTV:
+    type: application
+    platform: tvOS
+    deploymentTarget: "17.0"
+    sources:
+      - Sources/TV
+      - Sources/Graphics
+      - Sources/App/BoardLayout.swift
+      - ResourcesTV
+    dependencies:
+      - target: MinesweeperCoreTV
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: local.minesweeper.tv
+        GENERATE_INFOPLIST_FILE: YES
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        INFOPLIST_KEY_CFBundleDisplayName: Minesweeper
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.puzzle-games
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_NSHumanReadableCopyright: "A tribute to the Windows XP Minesweeper."
+
+  MinesweeperTVTests:
+    type: bundle.unit-test
+    platform: tvOS
+    deploymentTarget: "17.0"
+    sources:
+      - Tests
+      - TestsTV
+      - Sources/Graphics
+      - Sources/App/BoardLayout.swift
+      - Sources/TV/BoardCursor.swift
+      - Sources/TV/BoardScale.swift
+    dependencies:
+      - target: MinesweeperCoreTV
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: local.minesweeper.tv.tests
+
 schemes:
   Minesweeper:
     build:
@@ -69,3 +121,10 @@ schemes:
         MinesweeperTests: [test]
     test:
       targets: [MinesweeperTests]
+  MinesweeperTV:
+    build:
+      targets:
+        MinesweeperTV: all
+        MinesweeperTVTests: [test]
+    test:
+      targets: [MinesweeperTVTests]

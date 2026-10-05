@@ -1,0 +1,71 @@
+name: Minesweeper
+
+options:
+  bundleIdPrefix: local.minesweeper
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Manual
+    DEVELOPMENT_TEAM: ""
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    DEAD_CODE_STRIPPING: YES
+
+targets:
+  MinesweeperCore:
+    type: framework
+    platform: macOS
+    sources: [Sources/Core]
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: local.minesweeper.core
+
+  Minesweeper:
+    type: application
+    platform: macOS
+    sources:
+      - Sources/App
+      - Sources/Graphics
+      - Resources
+    dependencies:
+      - target: MinesweeperCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: local.minesweeper.app
+        GENERATE_INFOPLIST_FILE: YES
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        INFOPLIST_KEY_CFBundleDisplayName: Minesweeper
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.puzzle-games
+        INFOPLIST_KEY_NSPrincipalClass: NSApplication
+        INFOPLIST_KEY_NSHumanReadableCopyright: "A tribute to the Windows XP Minesweeper."
+
+  MinesweeperTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests
+      - Sources/Graphics
+      - Sources/App/BoardLayout.swift
+    dependencies:
+      - target: MinesweeperCore
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: local.minesweeper.tests
+
+schemes:
+  Minesweeper:
+    build:
+      targets:
+        Minesweeper: all
+        MinesweeperTests: [test]
+    test:
+      targets: [MinesweeperTests]

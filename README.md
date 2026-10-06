@@ -6,6 +6,8 @@ maps in code, and the app icons are rendered by the same code.
 
 > Unofficial fan project, not affiliated with or endorsed by Microsoft.
 
+![Minesweeper on macOS, Expert level](docs/screenshot-mac.png)
+
 ## Features
 
 - Beginner (9×9, 10 mines), Intermediate (16×16, 40) and Expert (30×16, 99), plus custom

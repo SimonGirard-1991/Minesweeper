@@ -77,3 +77,8 @@ The Simulator targets default to "Apple TV 4K (3rd generation)"; pass
 
 The icon PNGs and their `Contents.json` files are generated: change the sprites, then
 run `make icon` or `make tv-icon` rather than editing the asset catalogs by hand.
+
+## License
+
+[MIT](LICENSE). The license covers this code; the Windows XP look it recreates belongs
+to Microsoft.
